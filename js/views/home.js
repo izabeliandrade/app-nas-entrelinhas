@@ -55,7 +55,7 @@ export async function render({ root, refresh }) {
       <h1>${greet}${name ? html`, <em>${name}</em>` : ''}.</h1>
       <p class="subtitle">Entre histórias, pensamentos e tudo aquilo que permanece.</p>
       ${homeArt === 'photo' && homePhoto ? html`<div class="home-photo"><svg class="flora" viewBox="0 0 240 320" aria-hidden="true"><use href="#floral-sprig"/></svg><img src="${homePhoto}" alt="Minha imagem da tela inicial"></div>`
-        : homeArt !== 'none' ? html`<div class="home-art"><img src="img/livro-florido.svg" alt="Livro aberto com flores nascendo das páginas"></div>` : ''}
+        : homeArt !== 'none' ? html`<div class="home-art"><img src="img/gatinho-lendo.svg" alt="Gatinho de óculos lendo um livro entre flores"></div>` : ''}
     </section>
 
     ${isEmpty ? html`
