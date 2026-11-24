@@ -11,6 +11,7 @@ export async function render({ root, refresh, go }) {
     db.getSetting('lastBackup', null), db.getSetting('defaultGoal', 12),
   ]);
   const year = new Date().getFullYear();
+  const homeArt = await db.getSetting('homeArt', 'default');
   const goal = await getGoal(year);
   const books = await db.all('books');
   const hasDemo = (await Promise.all(['books', 'reviews', 'entries', 'quotes'].map(s => db.all(s)))).some(l => l.some(i => i.isDemo));
@@ -47,6 +48,12 @@ export async function render({ root, refresh, go }) {
         <div class="seg" role="radiogroup" aria-label="Tema">
           ${[['light', 'Claro'], ['dark', 'Escuro'], ['auto', 'Automático']].map(([k, l]) => html`<button class="${theme === k ? 'active' : ''}" data-theme="${k}">${l}</button>`)}
         </div>
+        <p class="field-label" style="margin:18px 0 8px">Imagem da tela inicial</p>
+        <div class="seg" role="radiogroup" aria-label="Imagem da tela inicial">
+          ${[['default', 'Desenho'], ['photo', 'Minha foto'], ['none', 'Nenhuma']].map(([k, l]) => html`<button class="${homeArt === k ? 'active' : ''}" data-homeart="${k}">${l}</button>`)}
+        </div>
+        ${homeArt === 'photo' ? html`<label class="btn btn-ghost btn-sm" style="margin-top:12px">${icon('image')} Trocar foto<input type="file" accept="image/*" data-homephoto hidden></label>` : ''}
+        <input type="file" accept="image/*" data-homephoto-new hidden>
       </div>
     </div>
 
@@ -85,6 +92,13 @@ export async function render({ root, refresh, go }) {
     try { await db.setSetting('photo', await resizeImage(await readFileAsDataURL(f), 320, 320, 0.85)); toast('Foto atualizada'); refresh(); }
     catch (err) { toast('Não foi possível usar esta imagem.', 'error'); }
   });
+  root.querySelectorAll('[data-homephoto], [data-homephoto-new]').forEach(inp => inp.addEventListener('change', async e => {
+    const f = e.target.files[0]; e.target.value = ''; if (!f) return;
+    try {
+      await db.setSetting('homeArtPhoto', await resizeImage(await readFileAsDataURL(f), 1000, 1000, 0.85));
+      await db.setSetting('homeArt', 'photo'); toast('Foto da tela inicial salva'); refresh();
+    } catch (err) { toast('Não foi possível usar esta imagem.', 'error'); }
+  }));
   $('[data-restore]', root).addEventListener('change', async e => {
     const f = e.target.files[0]; e.target.value = ''; if (!f) return;
     let parsed;
@@ -111,6 +125,11 @@ export async function render({ root, refresh, go }) {
   root.onclick = async e => {
     const t = e.target.closest('[data-theme]');
     if (t) { await db.setSetting('theme', t.dataset.theme); applyTheme(t.dataset.theme); refresh(); return; }
+    const ha = e.target.closest('[data-homeart]');
+    if (ha) {
+      if (ha.dataset.homeart === 'photo' && !(await db.getSetting('homeArtPhoto', ''))) { $('[data-homephoto-new]', root).click(); return; }
+      await db.setSetting('homeArt', ha.dataset.homeart); toast('Imagem da tela inicial atualizada'); refresh(); return;
+    }
     if (e.target.closest('[data-rmphoto]')) { await db.setSetting('photo', ''); refresh(); return; }
     if (e.target.closest('[data-name]')) {
       const v = await promptDialog({ title: 'Como devo te chamar?', label: 'Nome', value: name });

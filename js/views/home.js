@@ -10,6 +10,8 @@ export async function render({ root, refresh }) {
   const [books, reviews, entries, quotes] = await Promise.all(['books', 'reviews', 'entries', 'quotes'].map(s => db.all(s)));
   const name = await db.getSetting('name', '');
   const photo = await db.getSetting('photo', '');
+  const homeArt = await db.getSetting('homeArt', 'default');
+  const homePhoto = homeArt === 'photo' ? await db.getSetting('homeArtPhoto', '') : '';
   const year = new Date().getFullYear();
   const goal = await getGoal(year);
   const bmap = new Map(books.map(b => [b.id, b]));
@@ -52,10 +54,8 @@ export async function render({ root, refresh }) {
       <p class="date">${WEEKDAYS[now.getDay()]}, ${now.getDate()} de ${MONTHS[now.getMonth()]}</p>
       <h1>${greet}${name ? html`, <em>${name}</em>` : ''}.</h1>
       <p class="subtitle">Entre histórias, pensamentos e tudo aquilo que permanece.</p>
-      <div class="home-hero-card">
-        <svg class="flora" viewBox="0 0 240 320" aria-hidden="true"><use href="#floral-sprig"/></svg>
-        <span class="art"><img src="img/cantinho.svg" alt="Livros, flores e uma xícara de chá — um cantinho entre páginas"></span>
-      </div>
+      ${homeArt === 'photo' && homePhoto ? html`<div class="home-photo"><svg class="flora" viewBox="0 0 240 320" aria-hidden="true"><use href="#floral-sprig"/></svg><img src="${homePhoto}" alt="Minha imagem da tela inicial"></div>`
+        : homeArt !== 'none' ? html`<div class="home-art"><img src="img/livro-florido.svg" alt="Livro aberto com flores nascendo das páginas"></div>` : ''}
     </section>
 
     ${isEmpty ? html`

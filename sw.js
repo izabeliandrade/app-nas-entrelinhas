@@ -1,5 +1,5 @@
 // Service worker — funcionamento offline
-const VERSION = 'ne-v1.1.0';
+const VERSION = 'ne-v1.2.0';
 const SHELL = [
   './', 'index.html', 'manifest.webmanifest', 'css/styles.css',
   'js/app.js', 'js/db.js', 'js/utils.js', 'js/ui.js', 'js/model.js', 'js/actions.js', 'js/pickers.js', 'js/search.js',
@@ -8,7 +8,7 @@ const SHELL = [
   'js/views/diary.js', 'js/views/entryEditor.js', 'js/views/reviewEditor.js', 'js/views/review.js',
   'js/views/quotes.js', 'js/views/quoteForm.js', 'js/views/stats.js', 'js/views/retro.js', 'js/views/feelings.js',
   'js/views/memorable.js', 'js/views/calendar.js', 'js/views/profile.js', 'js/views/print.js',
-  'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png', 'js/seed.js', 'img/cantinho.svg',
+  'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png', 'js/seed.js', 'img/cantinho.svg', 'img/livro-florido.svg',
   'covers/vou-te-receitar-um-gato.jpg', 'covers/jantar-secreto.jpg', 'covers/as-vacas-nao-me-olham-mais-na-cara.jpg', 'covers/o-peso-do-passaro-morto.jpg', 'covers/a-metamorfose.jpg',
 ];
 
