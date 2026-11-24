@@ -23,7 +23,7 @@ export async function render({ root, params, go }) {
       <div class="body">${r.text}</div>
       ${r.tags?.length ? html`<div style="margin-top:24px">${tagList(r.tags)}</div>` : ''}
     </article>
-    <div class="ornament"><span>❧</span></div>
+    <div class="ornament"><span><svg viewBox="0 0 60 60" aria-hidden="true"><use href="#daisy"/></svg></span></div>
     <a class="btn btn-ghost btn-block" href="#/resenha/${r.id}/editar">${icon('feather')} Continuar escrevendo</a>
   `);
   root.onclick = async e => {

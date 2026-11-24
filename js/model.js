@@ -17,7 +17,7 @@ export const GENRES = ['Romance', 'Ficção literária', 'Clássico', 'Fantasia'
 export const DEFAULT_FEELINGS = ['Melancolia', 'Alegria', 'Nostalgia', 'Angústia', 'Esperança', 'Amor', 'Revolta', 'Paz', 'Confusão', 'Inspiração', 'Tristeza', 'Fascínio', 'Desconforto', 'Saudade', 'Reflexão'];
 
 // tons suaves para sentimentos, ciclando pela paleta
-const FEEL_TONES = ['#B98B78', '#858C72', '#705746', '#C9A88E', '#9AA084', '#A47764', '#8C7A6B', '#B5A58F', '#6E7560', '#C29C88'];
+const FEEL_TONES = ['#B5527F', '#7E9A74', '#9484AE', '#E39BB9', '#7A2748', '#9CC0E0', '#C9A0B4', '#A3B78D', '#D98A9E', '#E4A24F'];
 export function feelingTone(name) {
   let h = 0; for (const c of name) h = (h * 31 + c.charCodeAt(0)) >>> 0;
   return FEEL_TONES[h % FEEL_TONES.length];

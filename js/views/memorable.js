@@ -22,6 +22,6 @@ export async function render({ root }) {
           ${r ? html`<p class="prose small" style="margin-top:10px;color:var(--text-2);line-height:1.6">${excerpt(r.text, 150)}</p>` : ''}
         </div></a>`;
     })}</div>` : emptyState('Alguns livros não terminam na última página.', 'Na página de um livro, toque em “Livro que ficou” para guardá-lo aqui, com o motivo pelo qual ele te marcou.', html`<a class="btn btn-soft" href="#/estante?f=concluido">Ver livros concluídos</a>`)}
-    <div class="ornament"><span>❧</span></div>
+    <div class="ornament"><span><svg viewBox="0 0 60 60" aria-hidden="true"><use href="#daisy"/></svg></span></div>
   `);
 }

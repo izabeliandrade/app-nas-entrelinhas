@@ -122,7 +122,7 @@ export function applyTheme(theme) {
   try { localStorage.setItem('ne-theme', theme); } catch (e) { /* armazenamento indisponível */ }
   const dark = theme === 'dark' || (theme === 'auto' && mq.matches);
   document.documentElement.setAttribute('data-theme-resolved', dark ? 'dark' : 'light');
-  $('#theme-color')?.setAttribute('content', dark ? '#2B221C' : '#F5F0E8');
+  $('#theme-color')?.setAttribute('content', dark ? '#2A1F25' : '#FBF5F3');
 }
 mq.addEventListener?.('change', async () => applyTheme(await db.getSetting('theme', 'auto')));
 
@@ -133,7 +133,7 @@ async function lockIfNeeded() {
   return new Promise(resolve => {
     const el = document.createElement('div');
     el.className = 'lock-screen';
-    el.innerHTML = `<span class="ic" style="width:28px;height:28px;color:var(--accent)">${icons.lock}</span>
+    el.innerHTML = `<svg class="flora" style="position:static;width:80px;height:107px" viewBox="0 0 240 320" aria-hidden="true"><use href="#floral-sprig"/></svg>
       <h1>Nas Entrelinhas</h1><p>Este diário é só seu.</p>
       <form><input type="password" inputmode="numeric" autocomplete="current-password" maxlength="12" aria-label="PIN" placeholder="••••"></form>
       <p class="small muted lock-err" style="font-family:var(--f-ui);font-style:normal;min-height:20px"></p>`;
@@ -161,6 +161,11 @@ async function init() {
   }
   await lockIfNeeded();
   db.requestPersistence();
+  try {
+    const { applySeed } = await import('./seed.js');
+    const n = await applySeed();
+    if (n) setTimeout(() => toast(`${n} livros e resenhas do seu diário foram adicionados à estante`), 600);
+  } catch (e) { console.error('seed', e); }
   await route();
   if ('serviceWorker' in navigator && location.protocol !== 'file:') {
     navigator.serviceWorker.register('sw.js').then(reg => {

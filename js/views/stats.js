@@ -29,7 +29,7 @@ export async function render({ root, refresh }) {
       <a class="menu-card" href="#/proximas-paginas">${icon('book')}<h4>Próximas páginas</h4><p>O que vem a seguir.</p></a>
     </div>
 
-    <div class="ornament"><span>❧</span></div>
+    <div class="ornament"><span><svg viewBox="0 0 60 60" aria-hidden="true"><use href="#daisy"/></svg></span></div>
 
     <div class="year-picker">
       <label class="sr-only" for="yr">Ano</label>
@@ -95,7 +95,7 @@ export async function render({ root, refresh }) {
         <a class="card-flat" href="#/estante?f=abandonado" style="text-decoration:none"><b class="serif" style="font-size:30px;font-weight:500">${s.abandoned.length}</b><p class="small muted">${s.abandoned.length === 1 ? 'livro abandonado' : 'livros abandonados'}</p></a>
       </div>
     </section>`}
-    <div class="ornament"><span>❧</span></div>
+    <div class="ornament"><span><svg viewBox="0 0 60 60" aria-hidden="true"><use href="#daisy"/></svg></span></div>
   `);
 
   root.onchange = e => { if (e.target.matches('[data-year]')) { selYear = e.target.value === 'all' ? 'all' : Number(e.target.value); refresh(); } };

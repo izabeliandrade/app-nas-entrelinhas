@@ -3,11 +3,11 @@ import { download } from './utils.js';
 import { toast } from './ui.js';
 
 export const CARD_STYLES = {
-  creme: { bg: '#F5F0E8', fg: '#45372E', accent: '#B98B78', sub: '#8E7B6C', label: 'Creme' },
-  papel: { bg: '#FCFAF7', fg: '#45372E', accent: '#858C72', sub: '#8E7B6C', label: 'Papel', lines: true },
-  oliva: { bg: '#858C72', fg: '#FCFAF7', accent: '#E6D8C7', sub: '#E6D8C7', label: 'Oliva' },
-  cafe: { bg: '#45372E', fg: '#F5F0E8', accent: '#B98B78', sub: '#D8C6B2', label: 'Café' },
-  terracota: { bg: '#B98B78', fg: '#FCFAF7', accent: '#45372E', sub: '#F5F0E8', label: 'Terracota' },
+  creme: { bg: '#FBEFF3', fg: '#4A2E3B', accent: '#B5527F', sub: '#957A86', label: 'Rosa claro' },
+  papel: { bg: '#FFFCFB', fg: '#4A2E3B', accent: '#7E9A74', sub: '#957A86', label: 'Papel', lines: true },
+  oliva: { bg: '#7E9A74', fg: '#FFFCFB', accent: '#F5DCE9', sub: '#E2ECDF', label: 'Sálvia' },
+  cafe: { bg: '#7A2748', fg: '#FBEFF3', accent: '#EFB4BE', sub: '#F5DCE9', label: 'Vinho' },
+  terracota: { bg: '#B5527F', fg: '#FFFCFB', accent: '#7A2748', sub: '#FBEFF3', label: 'Rosa' },
 };
 
 async function ensureFonts() {
@@ -41,7 +41,7 @@ export async function quoteImage({ text, author, book, page }, styleKey = 'creme
   const c = document.createElement('canvas'); c.width = W; c.height = H;
   const ctx = c.getContext('2d');
   ctx.fillStyle = s.bg; ctx.fillRect(0, 0, W, H);
-  if (s.lines) { ctx.strokeStyle = 'rgba(112,87,70,.08)'; ctx.lineWidth = 2; for (let y = 120; y < H; y += 56) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); } }
+  if (s.lines) { ctx.strokeStyle = 'rgba(181,82,127,.09)'; ctx.lineWidth = 2; for (let y = 120; y < H; y += 56) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); } }
   // moldura fina
   ctx.strokeStyle = s.sub; ctx.globalAlpha = .35; ctx.lineWidth = 2; ctx.strokeRect(48, 48, W - 96, H - 96); ctx.globalAlpha = 1;
 

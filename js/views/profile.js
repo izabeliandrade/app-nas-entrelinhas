@@ -22,6 +22,7 @@ export async function render({ root, refresh, go }) {
   root.innerHTML = String(html`
     ${pageHeader({ title: 'Perfil', back: true })}
     <div class="profile-head">
+      <svg class="flora" viewBox="0 0 240 320" aria-hidden="true"><use href="#floral-sprig"/></svg>
       <label class="profile-photo" aria-label="Alterar foto">
         ${photo ? html`<img src="${photo}" alt="Foto de perfil">` : icon('user')}
         <span class="cam">${icon('camera')}</span>

@@ -52,6 +52,10 @@ export async function render({ root, refresh }) {
       <p class="date">${WEEKDAYS[now.getDay()]}, ${now.getDate()} de ${MONTHS[now.getMonth()]}</p>
       <h1>${greet}${name ? html`, <em>${name}</em>` : ''}.</h1>
       <p class="subtitle">Entre histórias, pensamentos e tudo aquilo que permanece.</p>
+      <div class="home-hero-card">
+        <svg class="flora" viewBox="0 0 240 320" aria-hidden="true"><use href="#floral-sprig"/></svg>
+        <span class="art"><img src="img/cantinho.svg" alt="Livros, flores e uma xícara de chá — um cantinho entre páginas"></span>
+      </div>
     </section>
 
     ${isEmpty ? html`
@@ -98,6 +102,7 @@ export async function render({ root, refresh }) {
     <section class="section">
       <div class="section-head"><h2>Uma frase <em>para hoje</em></h2>${line.own ? html`<a href="#/fragmentos">fragmentos</a>` : ''}</div>
       <div class="daily-quote">
+        <svg class="flora" viewBox="0 0 240 320" aria-hidden="true"><use href="#floral-sprig"/></svg>
         <blockquote>${line.text}</blockquote>
         <cite>${line.author}${line.book ? html` · <i>${line.book}</i>` : ''}</cite>
       </div>
@@ -143,7 +148,7 @@ export async function render({ root, refresh }) {
         <div><b>${yearEntries + yearQuotes}</b><span>registros</span></div>
       </div>
     </section>
-    <div class="ornament"><span>❧</span></div>
+    <div class="ornament"><span><svg viewBox="0 0 60 60" aria-hidden="true"><use href="#daisy"/></svg></span></div>
   `);
 
   root.onclick = async e => {

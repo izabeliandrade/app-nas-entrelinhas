@@ -54,6 +54,8 @@ export async function render({ root, params, go }) {
     ${!s.doneCount && !yQuotes.length && !yReviews.length ? emptyState(`${year} ainda está sendo escrito.`, 'Conclua livros, escreva resenhas e guarde fragmentos — sua retrospectiva vai nascer daí.', html`<a class="btn btn-soft" href="#/estante">Ir para a estante</a>`) : html`
     <article class="retro" id="retro">
       <section class="retro-cover">
+        <svg class="flora tl" viewBox="0 0 240 320" aria-hidden="true"><use href="#floral-sprig"/></svg>
+        <svg class="flora br" viewBox="0 0 240 320" aria-hidden="true"><use href="#floral-sprig"/></svg>
         <p class="k">Nas Entrelinhas · Edição anual</p>
         <h1>${year}</h1>
         <h2>${name ? `O ano de leituras de ${name}` : 'Um ano entre histórias'}</h2>
@@ -154,12 +156,12 @@ async function summaryImage({ year, name, s, goal, done }) {
   try { await Promise.all([document.fonts.load('400 100px "Cormorant Garamond"'), document.fonts.load('italic 400 40px "Cormorant Garamond"'), document.fonts.load('400 28px "DM Sans"')]); } catch (e) { /* ok */ }
   const W = 1080, H = 1920, c = document.createElement('canvas'); c.width = W; c.height = H;
   const x = c.getContext('2d');
-  x.fillStyle = '#45372E'; x.fillRect(0, 0, W, H);
+  x.fillStyle = '#7A2748'; x.fillRect(0, 0, W, H);
   x.strokeStyle = 'rgba(245,240,232,.25)'; x.lineWidth = 2; x.strokeRect(50, 50, W - 100, H - 100);
-  x.textAlign = 'center'; x.fillStyle = '#D8C6B2';
+  x.textAlign = 'center'; x.fillStyle = '#F5DCE9';
   x.font = '400 26px "DM Sans", sans-serif'; x.letterSpacing = '8px'; x.fillText('NAS ENTRELINHAS · RETROSPECTIVA', W / 2, 170); x.letterSpacing = '0px';
   x.fillStyle = '#F5F0E8'; x.font = '400 260px "Cormorant Garamond", Georgia, serif'; x.fillText(String(year), W / 2, 430);
-  x.fillStyle = '#D8C6B2'; x.font = 'italic 400 52px "Cormorant Garamond", Georgia, serif';
+  x.fillStyle = '#F5DCE9'; x.font = 'italic 400 52px "Cormorant Garamond", Georgia, serif';
   x.fillText(name ? `O ano de leituras de ${name}` : 'Um ano entre histórias', W / 2, 520);
   // capas
   const covers = done.filter(b => b.cover).slice(-5);
@@ -170,7 +172,7 @@ async function summaryImage({ year, name, s, goal, done }) {
     valid.forEach((im, i) => {
       x.save(); const cx = (W - total) / 2 + i * (cw + gap) + cw / 2, cy = 760;
       x.translate(cx, cy); x.rotate(((i - (valid.length - 1) / 2) * 6) * Math.PI / 180);
-      x.fillStyle = '#45372E'; x.fillRect(-cw / 2 - 4, -ch / 2 - 4, cw + 8, ch + 8);
+      x.fillStyle = '#7A2748'; x.fillRect(-cw / 2 - 4, -ch / 2 - 4, cw + 8, ch + 8);
       try { x.drawImage(im, -cw / 2, -ch / 2, cw, ch); } catch (e) { /* ignora */ }
       x.restore();
     });
@@ -179,12 +181,12 @@ async function summaryImage({ year, name, s, goal, done }) {
   nums.forEach(([n, l], i) => {
     const cx = i % 2 ? W * 0.72 : W * 0.28, cy = 1050 + Math.floor(i / 2) * 230;
     x.fillStyle = '#F5F0E8'; x.font = '400 120px "Cormorant Garamond", Georgia, serif'; x.fillText(String(n), cx, cy);
-    x.fillStyle = '#B98B78'; x.font = '400 28px "DM Sans", sans-serif'; x.letterSpacing = '4px'; x.fillText(l.toUpperCase(), cx, cy + 50); x.letterSpacing = '0px';
+    x.fillStyle = '#EFB4BE'; x.font = '400 28px "DM Sans", sans-serif'; x.letterSpacing = '4px'; x.fillText(l.toUpperCase(), cx, cy + 50); x.letterSpacing = '0px';
   });
   let y = 1560;
-  const line = (k, v) => { if (!v) return; x.fillStyle = '#B98B78'; x.font = '400 24px "DM Sans", sans-serif'; x.letterSpacing = '4px'; x.fillText(k.toUpperCase(), W / 2, y); x.letterSpacing = '0px'; x.fillStyle = '#F5F0E8'; x.font = 'italic 400 46px "Cormorant Garamond", Georgia, serif'; x.fillText(v.length > 40 ? v.slice(0, 38) + '…' : v, W / 2, y + 56); y += 140; };
+  const line = (k, v) => { if (!v) return; x.fillStyle = '#EFB4BE'; x.font = '400 24px "DM Sans", sans-serif'; x.letterSpacing = '4px'; x.fillText(k.toUpperCase(), W / 2, y); x.letterSpacing = '0px'; x.fillStyle = '#F5F0E8'; x.font = 'italic 400 46px "Cormorant Garamond", Georgia, serif'; x.fillText(v.length > 40 ? v.slice(0, 38) + '…' : v, W / 2, y + 56); y += 140; };
   line('Livro do ano', s.favorite?.title);
   line('Gênero mais lido', s.genres[0]?.[0]);
-  x.fillStyle = '#D8C6B2'; x.font = 'italic 400 34px "Cormorant Garamond", Georgia, serif'; x.fillText('Entre histórias, pensamentos e tudo aquilo que permanece.', W / 2, H - 100);
+  x.fillStyle = '#F5DCE9'; x.font = 'italic 400 34px "Cormorant Garamond", Georgia, serif'; x.fillText('Entre histórias, pensamentos e tudo aquilo que permanece.', W / 2, H - 100);
   return c;
 }

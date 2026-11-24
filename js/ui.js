@@ -83,7 +83,7 @@ export function promptDialog({ title, label = '', value = '', type = 'text', pla
 }
 
 // ---------- Capas ----------
-const COVER_TONES = [['#705746', '#F5F0E8'], ['#858C72', '#FCFAF7'], ['#B98B78', '#FCFAF7'], ['#45372E', '#E6D8C7'], ['#D8C6B2', '#45372E'], ['#6E7560', '#F5F0E8'], ['#A47764', '#FCFAF7'], ['#E6D8C7', '#705746']];
+const COVER_TONES = [['#7A2748', '#FBEFF3'], ['#7E9A74', '#FFFCFB'], ['#B5527F', '#FFFCFB'], ['#F5DCE9', '#7A2748'], ['#E2ECDF', '#33593C'], ['#9484AE', '#FFFCFB'], ['#C9A0B4', '#4A2E3B'], ['#4A2E3B', '#F5DCE9']];
 function tone(str) { let h = 0; for (const c of (str || '')) h = (h * 33 + c.charCodeAt(0)) >>> 0; return COVER_TONES[h % COVER_TONES.length]; }
 
 export function cover(book, size = 'md') {
@@ -102,7 +102,7 @@ export function stars(rating = 0, cls = '') {
   if (!rating) return raw('');
   let out = '';
   for (let i = 1; i <= 5; i++) {
-    const fill = rating >= i ? 100 : rating >= i - 0.5 ? 50 : 0;
+    const fill = Math.round(Math.max(0, Math.min(1, rating - (i - 1))) * 100);
     out += `<span class="star" style="--f:${fill}%">${STAR}</span>`;
   }
   return raw(`<span class="stars ${cls}" aria-label="Nota ${String(rating).replace('.', ',')} de 5">${out}</span>`);
@@ -117,7 +117,7 @@ export function bindRatings(root) {
     const input = box.querySelector('input');
     const paint = () => {
       const v = Number(input.value) || 0;
-      $$('.star', box).forEach((s, i) => s.style.setProperty('--f', v >= i + 1 ? '100%' : v >= i + 0.5 ? '50%' : '0%'));
+      $$('.star', box).forEach((s, i) => s.style.setProperty('--f', Math.round(Math.max(0, Math.min(1, v - i)) * 100) + '%'));
       box.querySelector('.rating-val').textContent = v ? String(v).replace('.', ',') : 'sem nota';
       box.querySelector('.rating-clear').hidden = !v;
     };
@@ -138,7 +138,7 @@ export function bindRatings(root) {
 // ---------- Diversos ----------
 export function emptyState(title, text, action = '') {
   return html`<div class="empty">
-    <svg class="empty-art" viewBox="0 0 120 80" aria-hidden="true"><path d="M10 70h100" stroke="currentColor" stroke-width="1"/><rect x="22" y="22" width="12" height="48" rx="1" fill="none" stroke="currentColor"/><rect x="36" y="14" width="10" height="56" rx="1" fill="none" stroke="currentColor"/><path d="M50 70 61 28l10 3-11 42z" fill="none" stroke="currentColor"/><path d="M84 50c4-10 12-14 20-14-2 9-8 15-20 14zM84 50l-6 20" fill="none" stroke="currentColor"/></svg>
+    <svg class="empty-art" viewBox="0 0 200 140" aria-hidden="true"><use href="#books-flowers"/></svg>
     <p class="empty-title serif">${title}</p>
     ${text ? html`<p class="empty-text">${text}</p>` : ''}
     ${action}
@@ -148,6 +148,7 @@ export function emptyState(title, text, action = '') {
 export function pageHeader({ title, kicker = '', back = false, actions = '' }) {
   return html`<header class="page-head ${back ? 'with-back' : ''}">
     ${back ? html`<button class="icon-btn back-btn" data-back aria-label="Voltar">${icon('back')}</button>` : ''}
+    ${!back ? raw('<svg class="head-flower" viewBox="0 0 120 60" aria-hidden="true"><use href="#sprig-small"/></svg>') : ''}
     <div class="page-head-text">${kicker ? html`<p class="kicker">${kicker}</p>` : ''}<h1 class="serif">${title}</h1></div>
     <div class="page-head-actions">${actions}</div>
   </header>`;
